@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio & CMS Admin - Kenzie Wu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-main: #f0f4ff;
+            --bg-card: #ffffff;
+            --bg-input: #f8fafc;
+            --accent: #6366f1;
+            --accent-hover: #4f46e5;
+            --accent-light: #e0e7ff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --danger: #ef4444;
+            --success: #10b981;
+            --sidebar-width: 260px;
+            --shadow-md: 0 10px 25px -5px rgba(99, 102, 241, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+            --shadow-hover: 0 20px 30px -10px rgba(99, 102, 241, 0.22);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Fredoka', cursive, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            background-image: radial-gradient(#cbd5e1 1.2px, transparent 1.2px);
+            background-size: 24px 24px;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            outline: none;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background-color: var(--bg-input);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-main);
+            margin-top: 6px;
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            background-color: #ffffff;
+        }
+
+        .password-wrapper {
+            position: relative;
+            width: 100%;
+            margin-top: 6px;
+            margin-bottom: 16px;
+        }
+
+        .password-wrapper input {
+            margin-top: 0;
+            margin-bottom: 0;
+            padding-right: 44px;
+        }
+
+        .toggle-password-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: color 0.2s;
+        }
+
+        .toggle-password-btn:hover {
+            color: var(--accent);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 8%;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--accent);
+            letter-spacing: 0.5px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            font-size: 1rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--accent);
+        }
+
+        .btn-portal {
+            background: var(--accent-light);
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            padding: 8px 18px;
+            border-radius: 10px;
+        }
+
+        .btn-portal:hover {
+            background: var(--accent);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            padding: 60px 8% 40px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 12px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            font-weight: 400;
+        }
+
+        .profile-avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            border: 4px solid var(--accent);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.25);
+            display: block;
+            transition: transform 0.3s ease;
+            background-color: var(--accent-light);
+        }
+
+        .profile-avatar:hover {
+            transform: scale(1.05);
+        }
+
+        .projects-container {
+            padding: 20px 8% 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            margin-bottom: 24px;
+            border-left: 5px solid var(--accent);
+            padding-left: 14px;
+            color: var(--text-main);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            background-color: var(--accent-light);
+        }
+
+        .card-body {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+            flex-grow: 1;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .tag {
+            background: var(--accent-light);
+            color: var(--accent);
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .card-link {
+            display: inline-block;
+            text-align: center;
+            background: var(--accent);
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .card-link:hover {
+            background: var(--accent-hover);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(6px);
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            padding: 32px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            border: 1px solid var(--border);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-full {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent);
+            color: #ffffff;
+            font-weight: 600;
+            border-radius: 10px;
+        }
+
+        #admin-view {
+            display: none;
+            min-height: 100vh;
+            background: #f8fafc;
+        }
+
+        .admin-layout {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 100%;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 20px;
+        }
+
+        .sidebar-menu {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+            overflow-x: auto;
+        }
+
+        .menu-btn {
+            background: transparent;
+            color: var(--text-muted);
+            padding: 10px 16px;
+            white-space: nowrap;
+            border-radius: 10px;
+        }
+
+        .menu-btn.active {
+            background: var(--accent);
+            color: #ffffff;
+        }
+
+        .admin-main {
+            flex-grow: 1;
+            padding: 24px;
+        }
+
+        .admin-section {
+            display: none;
+        }
+
+        .admin-section.active {
+            display: block;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            margin-top: 16px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: #f1f5f9;
+            color: var(--text-muted);
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            border-radius: 8px;
+        }
+
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-success { background: var(--success); color: white; }
+
+        .cloud-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #dcfce7;
+            color: #15803d;
+            font-size: 0.82rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        @media (min-width: 640px) {
+            .grid { grid-template-columns: repeat(2, 1fr); }
+            .hero h1 { font-size: 3.2rem; }
+        }
+
+        @media (min-width: 1024px) {
+            .grid { grid-template-columns: repeat(3, 1fr); }
+            .admin-layout { flex-direction: row; }
+            .sidebar {
+                width: var(--sidebar-width);
+                min-height: 100vh;
+                border-right: 1px solid var(--border);
+                border-bottom: none;
+                position: fixed;
+            }
+            .sidebar-menu {
+                flex-direction: column;
+            }
+            .admin-main {
+                margin-left: var(--sidebar-width);
+                padding: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="frontend-view">
+        <nav class="navbar">
+            <div class="logo" id="display-brand">Kenzie Wu</div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">Tentang Saya</a>
+                <a href="#projects" class="nav-link">Project</a>
+            </div>
+            <button class="btn-portal" onclick="openLoginModal()">Admin Panel</button>
+        </nav>
+
+        <section class="hero" id="home">
+            <div id="about">
+                <img id="display-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80" alt="Foto Profil Kenzie Wu" class="profile-avatar" onerror="this.src='https://placehold.co/150x150/6366f1/ffffff?text=KW'">
+                <h1 id="display-name">Kenzie Wu</h1>
+                <p id="display-bio">Murid Kelas 9 Sekolah Mutiara Bangsa 2. Tertarik dalam dunia teknologi, coding, dan pengembangan web modern.</p>
+            </div>
+        </section>
+
+        <main class="projects-container" id="projects">
+            <h2 class="section-title">Project Pilihan</h2>
+            <div class="grid" id="projects-grid">
+                <!-- Render Card Project Dinamis -->
+            </div>
+        </main>
+    </div>
+
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <h3 style="margin-bottom: 16px;">Login Admin</h3>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <label>Username</label>
+                <input type="text" id="usernameInput" required>
+                <label>Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="passwordInput" required>
+                    <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('passwordInput', this)" title="Lihat Password">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                </div>
+                <button type="submit" class="btn-full" style="margin-top: 10px;">Masuk</button>
+                <button type="button" class="btn-full" style="background: transparent; color: var(--text-muted); margin-top: 6px;" onclick="closeLoginModal()">Batal</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="admin-view">
+        <div class="admin-layout">
+            <aside class="sidebar">
+                <div class="logo" style="margin-bottom: 20px;">Admin Dashboard</div>
+                <div class="sidebar-menu">
+                    <button class="menu-btn active" onclick="switchTab('tab-profile', this)">Profil & Header</button>
+                    <button class="menu-btn" onclick="switchTab('tab-projects', this)">Kelola Project</button>
+                    <button class="menu-btn" onclick="switchTab('tab-security', this)">Keamanan Credential</button>
+                    <button class="menu-btn btn-danger" style="margin-top: auto;" onclick="handleLogout()">Logout</button>
+                </div>
+            </aside>
+
+            <main class="admin-main">
+                <!-- TAB PROFIL -->
+                <section id="tab-profile" class="admin-section active">
+                    <h2>Pengaturan Profil <span class="cloud-badge" id="cloud-status-badge">☁️ Cloud Database Active</span></h2>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">Ubah identitas utama dan foto profil yang tampil pada halaman depan.</p>
+                    <form onsubmit="saveProfile(event)">
+                        <label>Nama Brand (Navbar)</label>
+                        <input type="text" id="editBrand">
+                        <label>Nama Lengkap (Hero Title)</label>
+                        <input type="text" id="editName">
+                        
+                        <label>Upload Foto Profil Baru (Dari HP / Laptop)</label>
+                        <input type="file" id="editAvatarFile" accept="image/*" onchange="previewUploadedAvatar(event)">
+                        
+                        <div style="margin: -6px 0 6px; font-size: 0.85rem; color: var(--text-muted);">Atau tempel Link / URL Foto alternatif:</div>
+                        <input type="url" id="editAvatarUrl" placeholder="https://..." onchange="handleUrlAvatar(this.value)">
+
+                        <div id="avatar-preview-box" style="margin: -6px 0 16px; display: flex; align-items: center; gap: 14px; background: #f1f5f9; padding: 12px; border-radius: 10px; border: 1px solid var(--border);">
+                            <img id="editAvatarPreview" src="" alt="Preview Foto" style="width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent); flex-shrink: 0;">
+                            <div>
+                                <div style="font-size: 0.9rem; font-weight: 600; color: var(--success);" id="avatar-status-text">Foto Tersimpan & Tahan Refresh!</div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted);">Tersimpan permanen di Cloud & Memori Browser</div>
+                            </div>
+                        </div>
+
+                        <label>Bio / Deskripsi Singkat</label>
+                        <textarea id="editBio" rows="4"></textarea>
+                        <button type="submit" class="btn-success btn-sm" style="padding: 10px 20px;">Simpan Perubahan</button>
+                    </form>
+                </section>
+
+                <!-- TAB PROJECT -->
+                <section id="tab-projects" class="admin-section">
+                    <h2>Kelola Project</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">Tambah, edit, atau hapus item project dari portofolio.</p>
+                    
+                    <div style="background: var(--bg-card); padding: 20px; border-radius: 8px; margin-bottom: 24px; border: 1px solid var(--border);">
+                        <h3 id="form-project-title" style="margin-bottom: 12px;">Tambah Project Baru</h3>
+                        <form id="projectForm" onsubmit="saveProject(event)">
+                            <input type="hidden" id="projectId">
+                            <label>Judul Project</label>
+                            <input type="text" id="projTitle" required>
+                            <label>Deskripsi Project</label>
+                            <textarea id="projDesc" rows="3" required></textarea>
+                            <label>URL Gambar Thumbnail</label>
+                            <input type="url" id="projImg" placeholder="https://images.unsplash.com/..." required>
+                            <label>Tech Stack / Tag (pisahkan dengan koma)</label>
+                            <input type="text" id="projTags" placeholder="HTML, CSS, JS, Tailwind">
+                            <label>Link Akses Project</label>
+                            <input type="url" id="projLink" placeholder="https://example.com" required>
+                            <button type="submit" class="btn-full">Simpan Project</button>
+                        </form>
+                    </div>
+
+                    <h3>Daftar Project Active</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Judul</th>
+                                    <th>Tags</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-projects-list"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- TAB KEAMANAN -->
+                <section id="tab-security" class="admin-section">
+                    <h2>Pengaturan Keamanan</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">Perbarui Username dan Password akses panel admin.</p>
+                    <form onsubmit="saveCredentials(event)">
+                        <label>Username Baru</label>
+                        <input type="text" id="newUsername" required>
+                        <label>Password Baru</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="newPassword" required>
+                            <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('newPassword', this)" title="Lihat Password">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button>
+                        </div>
+                        <button type="submit" class="btn-success btn-sm" style="padding: 10px 20px;">Update Credential</button>
+                    </form>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const DEFAULT_DATA = {
+            auth: {
+                username: "shsyshs04",
+                password: "Adnan Januzaj"
+            },
+            profile: {
+                brand: "Kenzie Wu",
+                name: "Kenzie Wu",
+                avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80",
+                bio: "Murid Kelas 9 Sekolah Mutiara Bangsa 2. Tertarik dalam dunia teknologi, coding, dan pengembangan web modern."
+            },
+            projects: []
+        };
+
+        const DB_NAME = 'KenzieWuPortfolioDB_v5';
+        const STORE_NAME = 'app_store';
+        let cachedDB = null;
+        let currentUploadedAvatar = null;
+        
+        let fsDb = null;
+        let fsAuth = null;
+        let fsUser = null;
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'kenzie-portfolio-default';
+        
+        async function setupCloudSync() {
+            if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+                try {
+                    const firebaseConfig = JSON.parse(__firebase_config);
+                    const app = initializeApp(firebaseConfig);
+                    fsDb = getFirestore(app);
+                    fsAuth = getAuth(app);
+
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        const cred = await signInWithCustomToken(fsAuth, __initial_auth_token);
+                        fsUser = cred.user;
+                    } else {
+                        const cred = await signInAnonymously(fsAuth);
+                        fsUser = cred.user;
+                    }
+
+                    if (fsDb && fsUser) {
+                        const docRef = doc(fsDb, 'artifacts', appId, 'public', 'data', 'portfolio_store', 'config');
+                        onSnapshot(docRef, (snapshot) => {
+                            if (snapshot.exists()) {
+                                cachedDB = snapshot.data();
+                                renderFrontend();
+                                if (document.getElementById('admin-view').style.display === 'block') {
+                                    loadAdminData();
+                                }
+                            }
+                        }, (err) => console.warn("Cloud snapshot error:", err));
+                    }
+                } catch (e) {
+                    console.warn("Cloud Firestore initial connection fallback:", e);
+                }
+            }
+        }
+
+        function openIDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, 1);
+                request.onupgradeneeded = (e) => {
+                    const db = e.target.result;
+                    if (!db.objectStoreNames.contains(STORE_NAME)) {
+                        db.createObjectStore(STORE_NAME);
+                    }
+                };
+                request.onsuccess = (e) => resolve(e.target.result);
+                request.onerror = (e) => reject(e);
+            });
+        }
+
+        async function getDBAsync() {
+            if (cachedDB) return cachedDB;
+
+            // 1. Try Cloud Firestore First
+            if (fsDb && fsUser) {
+                try {
+                    const docRef = doc(fsDb, 'artifacts', appId, 'public', 'data', 'portfolio_store', 'config');
+                    const snap = await getDoc(docRef);
+                    if (snap.exists()) {
+                        cachedDB = snap.data();
+                        return cachedDB;
+                    }
+                } catch (err) {
+                    console.warn("Firestore fetch error:", err);
+                }
+            }
+
+            // 2. Try Window Name (Iframe Persistent Sesi)
+            try {
+                if (window.name && window.name.trim().startsWith('{')) {
+                    const winData = JSON.parse(window.name);
+                    if (winData && winData.profile) {
+                        cachedDB = winData;
+                        return cachedDB;
+                    }
+                }
+            } catch (e) {}
+
+            // 3. Try IndexedDB
+            try {
+                const idb = await openIDB();
+                const tx = idb.transaction(STORE_NAME, 'readonly');
+                const store = tx.objectStore(STORE_NAME);
+                const req = store.get('main_data');
+                const result = await new Promise((res) => {
+                    req.onsuccess = () => res(req.result);
+                    req.onerror = () => res(null);
+                });
+                if (result) {
+                    cachedDB = result;
+                    return cachedDB;
+                }
+            } catch (err) {}
+
+            // 4. Try LocalStorage
+            const local = localStorage.getItem('app_db');
+            if (local) {
+                try {
+                    cachedDB = JSON.parse(local);
+                    return cachedDB;
+                } catch (e) {}
+            }
+
+            cachedDB = DEFAULT_DATA;
+            return cachedDB;
+        }
+
+        function getDB() {
+            return cachedDB || DEFAULT_DATA;
+        }
+
+        async function saveDB(data) {
+            cachedDB = data;
+            const serialized = JSON.stringify(data);
+
+            // 1. Save to Cloud Firestore
+            if (fsDb && fsUser) {
+                try {
+                    const docRef = doc(fsDb, 'artifacts', appId, 'public', 'data', 'portfolio_store', 'config');
+                    await setDoc(docRef, data);
+                } catch (err) {
+                    console.error("Firestore Save Error:", err);
+                }
+            }
+
+            // 2. Save to Window Name
+            try {
+                window.name = serialized;
+            } catch (err) {}
+
+            // 3. Save to LocalStorage
+            try {
+                localStorage.setItem('app_db', serialized);
+            } catch (err) {}
+
+            // 4. Save to IndexedDB
+            try {
+                const idb = await openIDB();
+                const tx = idb.transaction(STORE_NAME, 'readwrite');
+                tx.objectStore(STORE_NAME).put(data, 'main_data');
+            } catch (err) {}
+
+            renderFrontend();
+        }
+
+        async function initApp() {
+            await setupCloudSync();
+            const data = await getDBAsync();
+            await saveDB(data);
+            renderFrontend();
+        }
+
+        function renderFrontend() {
+            const db = getDB();
+            
+            document.getElementById('display-brand').innerText = db.profile.brand || "Kenzie Wu";
+            document.getElementById('display-name').innerText = db.profile.name || "Kenzie Wu";
+            document.getElementById('display-bio').innerText = db.profile.bio || "";
+            
+            const avatarImg = db.profile.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80';
+            document.getElementById('display-avatar').src = avatarImg;
+
+            const grid = document.getElementById('projects-grid');
+            grid.innerHTML = '';
+            
+            if (!db.projects || db.projects.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 48px 20px; border: 2px dashed var(--border); border-radius: 16px; background: #ffffff;">
+                        <p style="font-size: 1.15rem; margin-bottom: 8px; font-weight: 600;">Belum ada project yang ditambahkan.</p>
+                        <p style="font-size: 0.95rem;">Masuk ke <b>Admin Panel</b> untuk menambah dan mengelola project Anda.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            db.projects.forEach(p => {
+                const tagsHtml = p.tags.map(t => `<span class="tag">${t.trim()}</span>`).join('');
+                const card = `
+                    <div class="card">
+                        <img src="${p.img}" alt="${p.title}" class="card-img" onerror="this.src='https://placehold.co/600x400/e0e7ff/6366f1?text=Project'">
+                        <div class="card-body">
+                            <h3 class="card-title">${p.title}</h3>
+                            <p class="card-desc">${p.desc}</p>
+                            <div class="card-tags">${tagsHtml}</div>
+                            <a href="${p.link}" target="_blank" class="card-link">Lihat Project</a>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += card;
+            });
+        }
+
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const db = getDB();
+            const u = document.getElementById('usernameInput').value;
+            const p = document.getElementById('passwordInput').value;
+
+            if (u === db.auth.username && p === db.auth.password) {
+                closeLoginModal();
+                document.getElementById('frontend-view').style.display = 'none';
+                document.getElementById('admin-view').style.display = 'block';
+                loadAdminData();
+            } else {
+                alert('Username atau Password Salah!');
+            }
+        }
+
+        function handleLogout() {
+            document.getElementById('admin-view').style.display = 'none';
+            document.getElementById('frontend-view').style.display = 'block';
+            document.getElementById('loginForm').reset();
+        }
+
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        function loadAdminData() {
+            const db = getDB();
+            
+            document.getElementById('editBrand').value = db.profile.brand || "Kenzie Wu";
+            document.getElementById('editName').value = db.profile.name || "Kenzie Wu";
+            document.getElementById('editBio').value = db.profile.bio || "";
+
+            const currentAvatar = db.profile.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80';
+            document.getElementById('editAvatarPreview').src = currentAvatar;
+            document.getElementById('avatar-status-text').innerText = "Foto tersimpan aman di Cloud!";
+            document.getElementById('avatar-status-text').style.color = "var(--success)";
+
+            document.getElementById('newUsername').value = db.auth.username;
+            document.getElementById('newPassword').value = db.auth.password;
+
+            renderAdminProjects();
+        }
+
+        function previewUploadedAvatar(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = async function() {
+                    const canvas = document.createElement('canvas');
+                    const size = 140;
+                    canvas.width = size;
+                    canvas.height = size;
+                    const ctx = canvas.getContext('2d');
+
+                    let minDim = Math.min(img.width, img.height);
+                    let sx = (img.width - minDim) / 2;
+                    let sy = (img.height - minDim) / 2;
+
+                    ctx.drawImage(img, sx, sy, minDim, minDim, 0, 0, size, size);
+                    
+                    const avatarBase64 = canvas.toDataURL('image/jpeg', 0.65);
+                    currentUploadedAvatar = avatarBase64;
+
+                    document.getElementById('editAvatarPreview').src = avatarBase64;
+                    document.getElementById('avatar-status-text').innerText = "Foto tersimpan otomatis ke Cloud!";
+                    document.getElementById('avatar-status-text').style.color = "var(--success)";
+
+                    const db = getDB();
+                    db.profile.avatar = avatarBase64;
+                    await saveDB(db);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function handleUrlAvatar(url) {
+            if (!url || !url.trim()) return;
+            currentUploadedAvatar = url.trim();
+            document.getElementById('editAvatarPreview').src = url.trim();
+            
+            const db = getDB();
+            db.profile.avatar = url.trim();
+            await saveDB(db);
+            
+            document.getElementById('avatar-status-text').innerText = "Foto dari URL berhasil tersimpan!";
+            document.getElementById('avatar-status-text').style.color = "var(--success)";
+        }
+
+        async function saveProfile(e) {
+            e.preventDefault();
+            const db = getDB();
+            db.profile.brand = document.getElementById('editBrand').value;
+            db.profile.name = document.getElementById('editName').value;
+            db.profile.bio = document.getElementById('editBio').value;
+            
+            if (currentUploadedAvatar) {
+                db.profile.avatar = currentUploadedAvatar;
+            } else if (document.getElementById('editAvatarPreview').src) {
+                db.profile.avatar = document.getElementById('editAvatarPreview').src;
+            }
+
+            await saveDB(db);
+            alert('Profil & Foto berhasil tersimpan permanen!');
+        }
+
+        function renderAdminProjects() {
+            const db = getDB();
+            const tbody = document.getElementById('admin-projects-list');
+            tbody.innerHTML = '';
+
+            db.projects.forEach(p => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><b>${p.title}</b></td>
+                    <td>${p.tags.join(', ')}</td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="btn-sm btn-success" onclick="editProject('${p.id}')">Edit</button>
+                            <button class="btn-sm btn-danger" onclick="deleteProject('${p.id}')">Hapus</button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        async function saveProject(e) {
+            e.preventDefault();
+            const db = getDB();
+            const id = document.getElementById('projectId').value;
+            const title = document.getElementById('projTitle').value;
+            const desc = document.getElementById('projDesc').value;
+            const img = document.getElementById('projImg').value;
+            const tags = document.getElementById('projTags').value.split(',');
+            const link = document.getElementById('projLink').value;
+
+            if (id) {
+                const index = db.projects.findIndex(p => p.id === id);
+                if (index !== -1) {
+                    db.projects[index] = { id, title, desc, img, tags, link };
+                }
+            } else {
+                const newProject = {
+                    id: Date.now().toString(),
+                    title, desc, img, tags, link
+                };
+                db.projects.push(newProject);
+            }
+
+            await saveDB(db);
+            resetProjectForm();
+            renderAdminProjects();
+            alert('Project berhasil disimpan ke Cloud Database!');
+        }
+
+        function editProject(id) {
+            const db = getDB();
+            const p = db.projects.find(item => item.id === id);
+            if (p) {
+                document.getElementById('projectId').value = p.id;
+                document.getElementById('projTitle').value = p.title;
+                document.getElementById('projDesc').value = p.desc;
+                document.getElementById('projImg').value = p.img;
+                document.getElementById('projTags').value = p.tags.join(', ');
+                document.getElementById('projLink').value = p.link;
+                
+                document.getElementById('form-project-title').innerText = "Edit Project";
+            }
+        }
+
+        async function deleteProject(id) {
+            const db = getDB();
+            db.projects = db.projects.filter(p => p.id !== id);
+            await saveDB(db);
+            renderAdminProjects();
+        }
+
+        function resetProjectForm() {
+            document.getElementById('projectId').value = '';
+            document.getElementById('projectForm').reset();
+            document.getElementById('form-project-title').innerText = "Tambah Project Baru";
+        }
+
+        async function saveCredentials(e) {
+            e.preventDefault();
+            const db = getDB();
+            db.auth.username = document.getElementById('newUsername').value;
+            db.auth.password = document.getElementById('newPassword').value;
+            
+            await saveDB(db);
+            alert('Credential login berhasil diperbarui!');
+        }
+
+        function togglePasswordVisibility(inputId, btn) {
+            const input = document.getElementById(inputId);
+            const isPassword = input.type === 'password';
+            input.type = isPassword ? 'text' : 'password';
+            
+            const eyeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>`;
+            const eyeOffIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></svg>`;
+            
+            btn.innerHTML = isPassword ? eyeOffIcon : eyeIcon;
+        }
+
+        window.openLoginModal = openLoginModal;
+        window.closeLoginModal = closeLoginModal;
+        window.handleLogin = handleLogin;
+        window.handleLogout = handleLogout;
+        window.switchTab = switchTab;
+        window.saveProfile = saveProfile;
+        window.previewUploadedAvatar = previewUploadedAvatar;
+        window.handleUrlAvatar = handleUrlAvatar;
+        window.saveProject = saveProject;
+        window.editProject = editProject;
+        window.deleteProject = deleteProject;
+        window.saveCredentials = saveCredentials;
+        window.togglePasswordVisibility = togglePasswordVisibility;
+
+        window.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
